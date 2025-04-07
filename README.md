@@ -11,7 +11,7 @@ Este proyecto es una calculadora con interfaz gráfica desarrollada en Python. P
 
 1. Clona este repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/tu-repositorio.git
+   git clone https://github.com/Doker367/Calculadora_parser.git
    cd tu-repositorio
    ```
 
@@ -52,4 +52,4 @@ Este proyecto es una calculadora con interfaz gráfica desarrollada en Python. P
 
 ## Autor
 
-Desarrollado por [Tu Nombre].
+Desarrollado por Doker367.

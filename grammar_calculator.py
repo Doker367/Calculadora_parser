@@ -3,76 +3,78 @@ import ply.yacc as yacc
 
 # Tokens
 tokens = (
-    'NUMBER',
-    'PLUS',
-    'MINUS',
-    'TIMES',
-    'DIVIDE',
-    'LPAREN',
-    'RPAREN',
+    'NUMERO',
+    'MAS',
+    'MENOS',
+    'POR',
+    'DIVIDIDO',
+    'PARENTESIS_IZQ',
+    'PARENTESIS_DER',
 )
 
-t_PLUS = r'\+'
-t_MINUS = r'-'
-t_TIMES = r'\*'
-t_DIVIDE = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
+# Reglas para los tokens
+t_MAS = r'\+'
+t_MENOS = r'-'
+t_POR = r'\*'
+t_DIVIDIDO = r'/'
+t_PARENTESIS_IZQ = r'\('
+t_PARENTESIS_DER = r'\)'
 
-def t_NUMBER(t):
+def t_NUMERO(t):
     r'\d+(\.\d+)?'
     t.value = float(t.value)
     return t
 
+# Ignorar espacios y tabulaciones
 t_ignore = ' \t'
 
 def t_error(t):
-    print(f"Illegal character '{t.value[0]}'")
+    print(f"Carácter ilegal '{t.value[0]}'")
     t.lexer.skip(1)
 
 lexer = lex.lex()
 
-# Grammar rules
-def p_expression_binop(p):
-    '''expression : expression PLUS term
-                  | expression MINUS term'''
+# Reglas de la gramática
+def p_expresion_binaria(p):
+    '''expresion : expresion MAS termino
+                 | expresion MENOS termino'''
     if p[2] == '+':
         p[0] = p[1] + p[3]
     elif p[2] == '-':
         p[0] = p[1] - p[3]
 
-def p_expression_term(p):
-    'expression : term'
+def p_expresion_termino(p):
+    'expresion : termino'
     p[0] = p[1]
 
-def p_term_binop(p):
-    '''term : term TIMES factor
-            | term DIVIDE factor'''
+def p_termino_binario(p):
+    '''termino : termino POR factor
+               | termino DIVIDIDO factor'''
     if p[2] == '*':
         p[0] = p[1] * p[3]
     elif p[2] == '/':
         p[0] = p[1] / p[3]
 
-def p_term_factor(p):
-    'term : factor'
+def p_termino_factor(p):
+    'termino : factor'
     p[0] = p[1]
 
-def p_factor_num(p):
-    'factor : NUMBER'
+def p_factor_numero(p):
+    'factor : NUMERO'
     p[0] = p[1]
 
-def p_factor_expr(p):
-    'factor : LPAREN expression RPAREN'
+def p_factor_expresion(p):
+    'factor : PARENTESIS_IZQ expresion PARENTESIS_DER'
     p[0] = p[2]
 
 def p_error(p):
-    print("Syntax error")
+    print("Error de sintaxis")
 
 parser = yacc.yacc()
 
-def evaluate_expression(expression):
+def evaluar_expresion(expresion):
     try:
-        return parser.parse(expression)
+        return parser.parse(expresion)
     except Exception as e:
         return f"Error: {e}"
 
@@ -84,4 +86,4 @@ if __name__ == "__main__":
             break
         if not s:
             continue
-        print(evaluate_expression(s))
+        print(evaluar_expresion(s))
