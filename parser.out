@@ -2,244 +2,361 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Grammar
 
-Rule 0     S' -> expression
-Rule 1     expression -> expression PLUS term
-Rule 2     expression -> expression MINUS term
-Rule 3     expression -> term
-Rule 4     term -> term TIMES factor
-Rule 5     term -> term DIVIDE factor
-Rule 6     term -> factor
-Rule 7     factor -> NUMBER
-Rule 8     factor -> LPAREN expression RPAREN
+Rule 0     S' -> expresion
+Rule 1     expresion -> expresion MAS termino
+Rule 2     expresion -> expresion MENOS termino
+Rule 3     expresion -> expresion POTENCIA termino
+Rule 4     expresion -> termino
+Rule 5     termino -> termino POR factor
+Rule 6     termino -> termino DIVIDIDO factor
+Rule 7     termino -> factor
+Rule 8     factor -> NUMERO
+Rule 9     factor -> PARENTESIS_IZQ expresion PARENTESIS_DER
+Rule 10    factor -> LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER
 
 Terminals, with rules where they appear
 
-DIVIDE               : 5
-LPAREN               : 8
-MINUS                : 2
-NUMBER               : 7
-PLUS                 : 1
-RPAREN               : 8
-TIMES                : 4
+DIVIDIDO             : 6
+LOGARITMO            : 10
+MAS                  : 1
+MENOS                : 2
+NUMERO               : 8
+PARENTESIS_DER       : 9 10
+PARENTESIS_IZQ       : 9 10
+POR                  : 5
+POTENCIA             : 3
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 1 2 8 0
-factor               : 4 5 6
-term                 : 1 2 3 4 5
+expresion            : 1 2 3 9 10 0
+factor               : 5 6 7
+termino              : 1 2 3 4 5 6
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . expression
-    (1) expression -> . expression PLUS term
-    (2) expression -> . expression MINUS term
-    (3) expression -> . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (0) S' -> . expresion
+    (1) expresion -> . expresion MAS termino
+    (2) expresion -> . expresion MENOS termino
+    (3) expresion -> . expresion POTENCIA termino
+    (4) expresion -> . termino
+    (5) termino -> . termino POR factor
+    (6) termino -> . termino DIVIDIDO factor
+    (7) termino -> . factor
+    (8) factor -> . NUMERO
+    (9) factor -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (10) factor -> . LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    NUMERO          shift and go to state 4
+    PARENTESIS_IZQ  shift and go to state 5
+    LOGARITMO       shift and go to state 6
 
-    expression                     shift and go to state 1
-    term                           shift and go to state 2
+    expresion                      shift and go to state 1
+    termino                        shift and go to state 2
     factor                         shift and go to state 3
 
 state 1
 
-    (0) S' -> expression .
-    (1) expression -> expression . PLUS term
-    (2) expression -> expression . MINUS term
+    (0) S' -> expresion .
+    (1) expresion -> expresion . MAS termino
+    (2) expresion -> expresion . MENOS termino
+    (3) expresion -> expresion . POTENCIA termino
 
-    PLUS            shift and go to state 6
-    MINUS           shift and go to state 7
+    MAS             shift and go to state 7
+    MENOS           shift and go to state 8
+    POTENCIA        shift and go to state 9
 
 
 state 2
 
-    (3) expression -> term .
-    (4) term -> term . TIMES factor
-    (5) term -> term . DIVIDE factor
+    (4) expresion -> termino .
+    (5) termino -> termino . POR factor
+    (6) termino -> termino . DIVIDIDO factor
 
-    PLUS            reduce using rule 3 (expression -> term .)
-    MINUS           reduce using rule 3 (expression -> term .)
-    $end            reduce using rule 3 (expression -> term .)
-    RPAREN          reduce using rule 3 (expression -> term .)
-    TIMES           shift and go to state 8
-    DIVIDE          shift and go to state 9
+    MAS             reduce using rule 4 (expresion -> termino .)
+    MENOS           reduce using rule 4 (expresion -> termino .)
+    POTENCIA        reduce using rule 4 (expresion -> termino .)
+    $end            reduce using rule 4 (expresion -> termino .)
+    PARENTESIS_DER  reduce using rule 4 (expresion -> termino .)
+    POR             shift and go to state 10
+    DIVIDIDO        shift and go to state 11
 
 
 state 3
 
-    (6) term -> factor .
+    (7) termino -> factor .
 
-    TIMES           reduce using rule 6 (term -> factor .)
-    DIVIDE          reduce using rule 6 (term -> factor .)
-    PLUS            reduce using rule 6 (term -> factor .)
-    MINUS           reduce using rule 6 (term -> factor .)
-    $end            reduce using rule 6 (term -> factor .)
-    RPAREN          reduce using rule 6 (term -> factor .)
+    POR             reduce using rule 7 (termino -> factor .)
+    DIVIDIDO        reduce using rule 7 (termino -> factor .)
+    MAS             reduce using rule 7 (termino -> factor .)
+    MENOS           reduce using rule 7 (termino -> factor .)
+    POTENCIA        reduce using rule 7 (termino -> factor .)
+    $end            reduce using rule 7 (termino -> factor .)
+    PARENTESIS_DER  reduce using rule 7 (termino -> factor .)
 
 
 state 4
 
-    (7) factor -> NUMBER .
+    (8) factor -> NUMERO .
 
-    TIMES           reduce using rule 7 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 7 (factor -> NUMBER .)
-    PLUS            reduce using rule 7 (factor -> NUMBER .)
-    MINUS           reduce using rule 7 (factor -> NUMBER .)
-    $end            reduce using rule 7 (factor -> NUMBER .)
-    RPAREN          reduce using rule 7 (factor -> NUMBER .)
+    POR             reduce using rule 8 (factor -> NUMERO .)
+    DIVIDIDO        reduce using rule 8 (factor -> NUMERO .)
+    MAS             reduce using rule 8 (factor -> NUMERO .)
+    MENOS           reduce using rule 8 (factor -> NUMERO .)
+    POTENCIA        reduce using rule 8 (factor -> NUMERO .)
+    $end            reduce using rule 8 (factor -> NUMERO .)
+    PARENTESIS_DER  reduce using rule 8 (factor -> NUMERO .)
 
 
 state 5
 
-    (8) factor -> LPAREN . expression RPAREN
-    (1) expression -> . expression PLUS term
-    (2) expression -> . expression MINUS term
-    (3) expression -> . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (9) factor -> PARENTESIS_IZQ . expresion PARENTESIS_DER
+    (1) expresion -> . expresion MAS termino
+    (2) expresion -> . expresion MENOS termino
+    (3) expresion -> . expresion POTENCIA termino
+    (4) expresion -> . termino
+    (5) termino -> . termino POR factor
+    (6) termino -> . termino DIVIDIDO factor
+    (7) termino -> . factor
+    (8) factor -> . NUMERO
+    (9) factor -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (10) factor -> . LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    NUMERO          shift and go to state 4
+    PARENTESIS_IZQ  shift and go to state 5
+    LOGARITMO       shift and go to state 6
 
-    expression                     shift and go to state 10
-    term                           shift and go to state 2
+    expresion                      shift and go to state 12
+    termino                        shift and go to state 2
     factor                         shift and go to state 3
 
 state 6
 
-    (1) expression -> expression PLUS . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (10) factor -> LOGARITMO . PARENTESIS_IZQ expresion PARENTESIS_DER
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    PARENTESIS_IZQ  shift and go to state 13
 
-    term                           shift and go to state 11
-    factor                         shift and go to state 3
 
 state 7
 
-    (2) expression -> expression MINUS . term
-    (4) term -> . term TIMES factor
-    (5) term -> . term DIVIDE factor
-    (6) term -> . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (1) expresion -> expresion MAS . termino
+    (5) termino -> . termino POR factor
+    (6) termino -> . termino DIVIDIDO factor
+    (7) termino -> . factor
+    (8) factor -> . NUMERO
+    (9) factor -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (10) factor -> . LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    NUMERO          shift and go to state 4
+    PARENTESIS_IZQ  shift and go to state 5
+    LOGARITMO       shift and go to state 6
 
-    term                           shift and go to state 12
+    termino                        shift and go to state 14
     factor                         shift and go to state 3
 
 state 8
 
-    (4) term -> term TIMES . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (2) expresion -> expresion MENOS . termino
+    (5) termino -> . termino POR factor
+    (6) termino -> . termino DIVIDIDO factor
+    (7) termino -> . factor
+    (8) factor -> . NUMERO
+    (9) factor -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (10) factor -> . LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    NUMERO          shift and go to state 4
+    PARENTESIS_IZQ  shift and go to state 5
+    LOGARITMO       shift and go to state 6
 
-    factor                         shift and go to state 13
+    termino                        shift and go to state 15
+    factor                         shift and go to state 3
 
 state 9
 
-    (5) term -> term DIVIDE . factor
-    (7) factor -> . NUMBER
-    (8) factor -> . LPAREN expression RPAREN
+    (3) expresion -> expresion POTENCIA . termino
+    (5) termino -> . termino POR factor
+    (6) termino -> . termino DIVIDIDO factor
+    (7) termino -> . factor
+    (8) factor -> . NUMERO
+    (9) factor -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (10) factor -> . LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER
 
-    NUMBER          shift and go to state 4
-    LPAREN          shift and go to state 5
+    NUMERO          shift and go to state 4
+    PARENTESIS_IZQ  shift and go to state 5
+    LOGARITMO       shift and go to state 6
 
-    factor                         shift and go to state 14
+    termino                        shift and go to state 16
+    factor                         shift and go to state 3
 
 state 10
 
-    (8) factor -> LPAREN expression . RPAREN
-    (1) expression -> expression . PLUS term
-    (2) expression -> expression . MINUS term
+    (5) termino -> termino POR . factor
+    (8) factor -> . NUMERO
+    (9) factor -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (10) factor -> . LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER
 
-    RPAREN          shift and go to state 15
-    PLUS            shift and go to state 6
-    MINUS           shift and go to state 7
+    NUMERO          shift and go to state 4
+    PARENTESIS_IZQ  shift and go to state 5
+    LOGARITMO       shift and go to state 6
 
+    factor                         shift and go to state 17
 
 state 11
 
-    (1) expression -> expression PLUS term .
-    (4) term -> term . TIMES factor
-    (5) term -> term . DIVIDE factor
+    (6) termino -> termino DIVIDIDO . factor
+    (8) factor -> . NUMERO
+    (9) factor -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (10) factor -> . LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER
 
-    PLUS            reduce using rule 1 (expression -> expression PLUS term .)
-    MINUS           reduce using rule 1 (expression -> expression PLUS term .)
-    $end            reduce using rule 1 (expression -> expression PLUS term .)
-    RPAREN          reduce using rule 1 (expression -> expression PLUS term .)
-    TIMES           shift and go to state 8
-    DIVIDE          shift and go to state 9
+    NUMERO          shift and go to state 4
+    PARENTESIS_IZQ  shift and go to state 5
+    LOGARITMO       shift and go to state 6
 
+    factor                         shift and go to state 18
 
 state 12
 
-    (2) expression -> expression MINUS term .
-    (4) term -> term . TIMES factor
-    (5) term -> term . DIVIDE factor
+    (9) factor -> PARENTESIS_IZQ expresion . PARENTESIS_DER
+    (1) expresion -> expresion . MAS termino
+    (2) expresion -> expresion . MENOS termino
+    (3) expresion -> expresion . POTENCIA termino
 
-    PLUS            reduce using rule 2 (expression -> expression MINUS term .)
-    MINUS           reduce using rule 2 (expression -> expression MINUS term .)
-    $end            reduce using rule 2 (expression -> expression MINUS term .)
-    RPAREN          reduce using rule 2 (expression -> expression MINUS term .)
-    TIMES           shift and go to state 8
-    DIVIDE          shift and go to state 9
+    PARENTESIS_DER  shift and go to state 19
+    MAS             shift and go to state 7
+    MENOS           shift and go to state 8
+    POTENCIA        shift and go to state 9
 
 
 state 13
 
-    (4) term -> term TIMES factor .
+    (10) factor -> LOGARITMO PARENTESIS_IZQ . expresion PARENTESIS_DER
+    (1) expresion -> . expresion MAS termino
+    (2) expresion -> . expresion MENOS termino
+    (3) expresion -> . expresion POTENCIA termino
+    (4) expresion -> . termino
+    (5) termino -> . termino POR factor
+    (6) termino -> . termino DIVIDIDO factor
+    (7) termino -> . factor
+    (8) factor -> . NUMERO
+    (9) factor -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (10) factor -> . LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER
 
-    TIMES           reduce using rule 4 (term -> term TIMES factor .)
-    DIVIDE          reduce using rule 4 (term -> term TIMES factor .)
-    PLUS            reduce using rule 4 (term -> term TIMES factor .)
-    MINUS           reduce using rule 4 (term -> term TIMES factor .)
-    $end            reduce using rule 4 (term -> term TIMES factor .)
-    RPAREN          reduce using rule 4 (term -> term TIMES factor .)
+    NUMERO          shift and go to state 4
+    PARENTESIS_IZQ  shift and go to state 5
+    LOGARITMO       shift and go to state 6
 
+    expresion                      shift and go to state 20
+    termino                        shift and go to state 2
+    factor                         shift and go to state 3
 
 state 14
 
-    (5) term -> term DIVIDE factor .
+    (1) expresion -> expresion MAS termino .
+    (5) termino -> termino . POR factor
+    (6) termino -> termino . DIVIDIDO factor
 
-    TIMES           reduce using rule 5 (term -> term DIVIDE factor .)
-    DIVIDE          reduce using rule 5 (term -> term DIVIDE factor .)
-    PLUS            reduce using rule 5 (term -> term DIVIDE factor .)
-    MINUS           reduce using rule 5 (term -> term DIVIDE factor .)
-    $end            reduce using rule 5 (term -> term DIVIDE factor .)
-    RPAREN          reduce using rule 5 (term -> term DIVIDE factor .)
+    MAS             reduce using rule 1 (expresion -> expresion MAS termino .)
+    MENOS           reduce using rule 1 (expresion -> expresion MAS termino .)
+    POTENCIA        reduce using rule 1 (expresion -> expresion MAS termino .)
+    $end            reduce using rule 1 (expresion -> expresion MAS termino .)
+    PARENTESIS_DER  reduce using rule 1 (expresion -> expresion MAS termino .)
+    POR             shift and go to state 10
+    DIVIDIDO        shift and go to state 11
 
 
 state 15
 
-    (8) factor -> LPAREN expression RPAREN .
+    (2) expresion -> expresion MENOS termino .
+    (5) termino -> termino . POR factor
+    (6) termino -> termino . DIVIDIDO factor
 
-    TIMES           reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    $end            reduce using rule 8 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 8 (factor -> LPAREN expression RPAREN .)
+    MAS             reduce using rule 2 (expresion -> expresion MENOS termino .)
+    MENOS           reduce using rule 2 (expresion -> expresion MENOS termino .)
+    POTENCIA        reduce using rule 2 (expresion -> expresion MENOS termino .)
+    $end            reduce using rule 2 (expresion -> expresion MENOS termino .)
+    PARENTESIS_DER  reduce using rule 2 (expresion -> expresion MENOS termino .)
+    POR             shift and go to state 10
+    DIVIDIDO        shift and go to state 11
+
+
+state 16
+
+    (3) expresion -> expresion POTENCIA termino .
+    (5) termino -> termino . POR factor
+    (6) termino -> termino . DIVIDIDO factor
+
+    MAS             reduce using rule 3 (expresion -> expresion POTENCIA termino .)
+    MENOS           reduce using rule 3 (expresion -> expresion POTENCIA termino .)
+    POTENCIA        reduce using rule 3 (expresion -> expresion POTENCIA termino .)
+    $end            reduce using rule 3 (expresion -> expresion POTENCIA termino .)
+    PARENTESIS_DER  reduce using rule 3 (expresion -> expresion POTENCIA termino .)
+    POR             shift and go to state 10
+    DIVIDIDO        shift and go to state 11
+
+
+state 17
+
+    (5) termino -> termino POR factor .
+
+    POR             reduce using rule 5 (termino -> termino POR factor .)
+    DIVIDIDO        reduce using rule 5 (termino -> termino POR factor .)
+    MAS             reduce using rule 5 (termino -> termino POR factor .)
+    MENOS           reduce using rule 5 (termino -> termino POR factor .)
+    POTENCIA        reduce using rule 5 (termino -> termino POR factor .)
+    $end            reduce using rule 5 (termino -> termino POR factor .)
+    PARENTESIS_DER  reduce using rule 5 (termino -> termino POR factor .)
+
+
+state 18
+
+    (6) termino -> termino DIVIDIDO factor .
+
+    POR             reduce using rule 6 (termino -> termino DIVIDIDO factor .)
+    DIVIDIDO        reduce using rule 6 (termino -> termino DIVIDIDO factor .)
+    MAS             reduce using rule 6 (termino -> termino DIVIDIDO factor .)
+    MENOS           reduce using rule 6 (termino -> termino DIVIDIDO factor .)
+    POTENCIA        reduce using rule 6 (termino -> termino DIVIDIDO factor .)
+    $end            reduce using rule 6 (termino -> termino DIVIDIDO factor .)
+    PARENTESIS_DER  reduce using rule 6 (termino -> termino DIVIDIDO factor .)
+
+
+state 19
+
+    (9) factor -> PARENTESIS_IZQ expresion PARENTESIS_DER .
+
+    POR             reduce using rule 9 (factor -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    DIVIDIDO        reduce using rule 9 (factor -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    MAS             reduce using rule 9 (factor -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    MENOS           reduce using rule 9 (factor -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    POTENCIA        reduce using rule 9 (factor -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    $end            reduce using rule 9 (factor -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    PARENTESIS_DER  reduce using rule 9 (factor -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+
+
+state 20
+
+    (10) factor -> LOGARITMO PARENTESIS_IZQ expresion . PARENTESIS_DER
+    (1) expresion -> expresion . MAS termino
+    (2) expresion -> expresion . MENOS termino
+    (3) expresion -> expresion . POTENCIA termino
+
+    PARENTESIS_DER  shift and go to state 21
+    MAS             shift and go to state 7
+    MENOS           shift and go to state 8
+    POTENCIA        shift and go to state 9
+
+
+state 21
+
+    (10) factor -> LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER .
+
+    POR             reduce using rule 10 (factor -> LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    DIVIDIDO        reduce using rule 10 (factor -> LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    MAS             reduce using rule 10 (factor -> LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    MENOS           reduce using rule 10 (factor -> LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    POTENCIA        reduce using rule 10 (factor -> LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    $end            reduce using rule 10 (factor -> LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    PARENTESIS_DER  reduce using rule 10 (factor -> LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER .)
 

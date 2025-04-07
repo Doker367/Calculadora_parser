@@ -38,6 +38,14 @@ Este proyecto es una calculadora con interfaz gráfica desarrollada en Python. P
    python3 gui_calculator.py
    ```
 
+## Funcionalidades
+
+- Operaciones matemáticas básicas: suma, resta, multiplicación y división.
+- Logaritmo base 10.
+- Potencia (n^n).
+- Cargar imágenes.
+- Reconocimiento de voz para ingresar expresiones matemáticas.
+
 ## Librerías utilizadas
 
 - `tkinter`: Para la interfaz gráfica.

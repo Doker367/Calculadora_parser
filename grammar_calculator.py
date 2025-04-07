@@ -1,5 +1,6 @@
 import ply.lex as lex
 import ply.yacc as yacc
+import math
 
 # Tokens
 tokens = (
@@ -10,6 +11,8 @@ tokens = (
     'DIVIDIDO',
     'PARENTESIS_IZQ',
     'PARENTESIS_DER',
+    'POTENCIA',
+    'LOGARITMO',
 )
 
 # Reglas para los tokens
@@ -19,6 +22,8 @@ t_POR = r'\*'
 t_DIVIDIDO = r'/'
 t_PARENTESIS_IZQ = r'\('
 t_PARENTESIS_DER = r'\)'
+t_POTENCIA = r'\^'
+t_LOGARITMO = r'log10'
 
 def t_NUMERO(t):
     r'\d+(\.\d+)?'
@@ -37,11 +42,14 @@ lexer = lex.lex()
 # Reglas de la gramática
 def p_expresion_binaria(p):
     '''expresion : expresion MAS termino
-                 | expresion MENOS termino'''
+                 | expresion MENOS termino
+                 | expresion POTENCIA termino'''
     if p[2] == '+':
         p[0] = p[1] + p[3]
     elif p[2] == '-':
         p[0] = p[1] - p[3]
+    elif p[2] == '^':
+        p[0] = p[1] ** p[3]
 
 def p_expresion_termino(p):
     'expresion : termino'
@@ -66,6 +74,10 @@ def p_factor_numero(p):
 def p_factor_expresion(p):
     'factor : PARENTESIS_IZQ expresion PARENTESIS_DER'
     p[0] = p[2]
+
+def p_factor_logaritmo(p):
+    'factor : LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER'
+    p[0] = math.log10(p[3])
 
 def p_error(p):
     print("Error de sintaxis")

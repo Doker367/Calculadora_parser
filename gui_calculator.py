@@ -43,6 +43,9 @@ def usar_microfono():
     except OSError:
         messagebox.showerror("Error de Micrófono", "No se detectó un dispositivo de entrada de audio.")
 
+def borrar_ultimo():
+    entrada.delete(len(entrada.get()) - 1, tk.END)
+
 # Crear la ventana principal
 ventana = tk.Tk()
 ventana.title("Calculadora")
@@ -51,31 +54,34 @@ ventana.title("Calculadora")
 entrada = tk.Entry(ventana, width=30)
 entrada.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
 
+# Etiqueta para mostrar el resultado
+etiqueta_resultado = tk.Label(ventana, text="Resultado: ")
+etiqueta_resultado.grid(row=1, column=0, columnspan=4, padx=10, pady=10)
+
 # Botones de números y operaciones
 botones = [
-    ('7', 1, 0), ('8', 1, 1), ('9', 1, 2), ('/', 1, 3),
-    ('4', 2, 0), ('5', 2, 1), ('6', 2, 2), ('*', 2, 3),
-    ('1', 3, 0), ('2', 3, 1), ('3', 3, 2), ('-', 3, 3),
-    ('0', 4, 0), ('.', 4, 1), ('=', 4, 2), ('+', 4, 3),
+    ('^', 2, 0), ('log10', 2, 1), ('⌫', 2, 2), 
+    ('7', 3, 0), ('8', 3, 1), ('9', 3, 2), ('/', 3, 3),
+    ('4', 4, 0), ('5', 4, 1), ('6', 4, 2), ('*', 4, 3),
+    ('1', 5, 0), ('2', 5, 1), ('3', 5, 2), ('-', 5, 3),
+    ('0', 6, 0), ('.', 6, 1), ('=', 6, 2), ('+', 6, 3),
 ]
 
 for (texto, fila, columna) in botones:
     if texto == '=':
         btn = tk.Button(ventana, text=texto, command=calcular, width=5, height=2)
+    elif texto == '⌫':
+        btn = tk.Button(ventana, text=texto, command=borrar_ultimo, width=5, height=2)
     else:
         btn = tk.Button(ventana, text=texto, command=lambda t=texto: boton_click(t), width=5, height=2)
     btn.grid(row=fila, column=columna, padx=5, pady=5)
 
 # Botones adicionales
 boton_imagen = tk.Button(ventana, text="Cargar Imagen", command=cargar_imagen, width=10, height=2)
-boton_imagen.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
+boton_imagen.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
 
 boton_microfono = tk.Button(ventana, text="Micrófono", command=usar_microfono, width=10, height=2)
-boton_microfono.grid(row=5, column=2, columnspan=2, padx=5, pady=5)
-
-# Etiqueta para mostrar el resultado
-etiqueta_resultado = tk.Label(ventana, text="Resultado: ")
-etiqueta_resultado.grid(row=6, column=0, columnspan=4, padx=10, pady=10)
+boton_microfono.grid(row=7, column=2, columnspan=2, padx=5, pady=5)
 
 # Iniciar el bucle principal de la interfaz gráfica
 ventana.mainloop()

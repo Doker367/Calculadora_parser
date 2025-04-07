@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'DIVIDE LPAREN MINUS NUMBER PLUS RPAREN TIMESexpression : expression PLUS term\n                  | expression MINUS termexpression : termterm : term TIMES factor\n            | term DIVIDE factorterm : factorfactor : NUMBERfactor : LPAREN expression RPAREN'
+_lr_signature = 'DIVIDIDO LOGARITMO MAS MENOS NUMERO PARENTESIS_DER PARENTESIS_IZQ POR POTENCIAexpresion : expresion MAS termino\n                 | expresion MENOS termino\n                 | expresion POTENCIA terminoexpresion : terminotermino : termino POR factor\n               | termino DIVIDIDO factortermino : factorfactor : NUMEROfactor : PARENTESIS_IZQ expresion PARENTESIS_DERfactor : LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER'
     
-_lr_action_items = {'NUMBER':([0,5,6,7,8,9,],[4,4,4,4,4,4,]),'LPAREN':([0,5,6,7,8,9,],[5,5,5,5,5,5,]),'$end':([1,2,3,4,11,12,13,14,15,],[0,-3,-6,-7,-1,-2,-4,-5,-8,]),'PLUS':([1,2,3,4,10,11,12,13,14,15,],[6,-3,-6,-7,6,-1,-2,-4,-5,-8,]),'MINUS':([1,2,3,4,10,11,12,13,14,15,],[7,-3,-6,-7,7,-1,-2,-4,-5,-8,]),'RPAREN':([2,3,4,10,11,12,13,14,15,],[-3,-6,-7,15,-1,-2,-4,-5,-8,]),'TIMES':([2,3,4,11,12,13,14,15,],[8,-6,-7,8,8,-4,-5,-8,]),'DIVIDE':([2,3,4,11,12,13,14,15,],[9,-6,-7,9,9,-4,-5,-8,]),}
+_lr_action_items = {'NUMERO':([0,5,7,8,9,10,11,13,],[4,4,4,4,4,4,4,4,]),'PARENTESIS_IZQ':([0,5,6,7,8,9,10,11,13,],[5,5,13,5,5,5,5,5,5,]),'LOGARITMO':([0,5,7,8,9,10,11,13,],[6,6,6,6,6,6,6,6,]),'$end':([1,2,3,4,14,15,16,17,18,19,21,],[0,-4,-7,-8,-1,-2,-3,-5,-6,-9,-10,]),'MAS':([1,2,3,4,12,14,15,16,17,18,19,20,21,],[7,-4,-7,-8,7,-1,-2,-3,-5,-6,-9,7,-10,]),'MENOS':([1,2,3,4,12,14,15,16,17,18,19,20,21,],[8,-4,-7,-8,8,-1,-2,-3,-5,-6,-9,8,-10,]),'POTENCIA':([1,2,3,4,12,14,15,16,17,18,19,20,21,],[9,-4,-7,-8,9,-1,-2,-3,-5,-6,-9,9,-10,]),'PARENTESIS_DER':([2,3,4,12,14,15,16,17,18,19,20,21,],[-4,-7,-8,19,-1,-2,-3,-5,-6,-9,21,-10,]),'POR':([2,3,4,14,15,16,17,18,19,21,],[10,-7,-8,10,10,10,-5,-6,-9,-10,]),'DIVIDIDO':([2,3,4,14,15,16,17,18,19,21,],[11,-7,-8,11,11,11,-5,-6,-9,-10,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expression':([0,5,],[1,10,]),'term':([0,5,6,7,],[2,2,11,12,]),'factor':([0,5,6,7,8,9,],[3,3,3,3,13,14,]),}
+_lr_goto_items = {'expresion':([0,5,13,],[1,12,20,]),'termino':([0,5,7,8,9,13,],[2,2,14,15,16,2,]),'factor':([0,5,7,8,9,10,11,13,],[3,3,3,3,3,17,18,3,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,13 +26,15 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> expression","S'",1,None,None,None),
-  ('expression -> expression PLUS term','expression',3,'p_expression_binop','grammar_calculator.py',37),
-  ('expression -> expression MINUS term','expression',3,'p_expression_binop','grammar_calculator.py',38),
-  ('expression -> term','expression',1,'p_expression_term','grammar_calculator.py',45),
-  ('term -> term TIMES factor','term',3,'p_term_binop','grammar_calculator.py',49),
-  ('term -> term DIVIDE factor','term',3,'p_term_binop','grammar_calculator.py',50),
-  ('term -> factor','term',1,'p_term_factor','grammar_calculator.py',57),
-  ('factor -> NUMBER','factor',1,'p_factor_num','grammar_calculator.py',61),
-  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor_expr','grammar_calculator.py',65),
+  ("S' -> expresion","S'",1,None,None,None),
+  ('expresion -> expresion MAS termino','expresion',3,'p_expresion_binaria','grammar_calculator.py',44),
+  ('expresion -> expresion MENOS termino','expresion',3,'p_expresion_binaria','grammar_calculator.py',45),
+  ('expresion -> expresion POTENCIA termino','expresion',3,'p_expresion_binaria','grammar_calculator.py',46),
+  ('expresion -> termino','expresion',1,'p_expresion_termino','grammar_calculator.py',55),
+  ('termino -> termino POR factor','termino',3,'p_termino_binario','grammar_calculator.py',59),
+  ('termino -> termino DIVIDIDO factor','termino',3,'p_termino_binario','grammar_calculator.py',60),
+  ('termino -> factor','termino',1,'p_termino_factor','grammar_calculator.py',67),
+  ('factor -> NUMERO','factor',1,'p_factor_numero','grammar_calculator.py',71),
+  ('factor -> PARENTESIS_IZQ expresion PARENTESIS_DER','factor',3,'p_factor_expresion','grammar_calculator.py',75),
+  ('factor -> LOGARITMO PARENTESIS_IZQ expresion PARENTESIS_DER','factor',4,'p_factor_logaritmo','grammar_calculator.py',79),
 ]
